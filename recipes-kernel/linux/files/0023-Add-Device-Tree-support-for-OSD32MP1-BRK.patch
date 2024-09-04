@@ -26,7 +26,7 @@ new file mode 100644
 index 000000000000..d5f2793f548d
 --- /dev/null
 +++ b/arch/arm/boot/dts/stm32mp157c-osd32mp1-brk.dts
-@@ -0,0 +1,1120 @@
+@@ -0,0 +1,1111 @@
 +/* SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause) */
 +/*
 + * Copyright (C) Octavo Systems LLC 2020 - All Rights Reserved
@@ -406,21 +406,6 @@ index 000000000000..d5f2793f548d
 +		};
 +	};
 +
-+	pwm1_pins_mx: pwm1-0 {
-+		pins {
-+			pinmux = <STM32_PINMUX('A', 9, AF1)>; /* TIM1_CH2 */
-+			bias-pull-down;
-+			drive-push-pull;
-+			slew-rate = <0>;
-+		};
-+	};
-+
-+	pwm1_sleep_pins_mx: pwm1-sleep-0 {
-+		pins {
-+			pinmux = <STM32_PINMUX('A', 9, ANALOG)>; /* TIM1_CH1 */
-+		};
-+	};
-+
 +	pwm3_pins_mx: pwm3-0 {
 +		pins {
 +			pinmux = <STM32_PINMUX('B', 5, AF2)>; /* TIM3_CH2 */
@@ -648,12 +633,16 @@ index 000000000000..d5f2793f548d
 +
 +&dma1{
 +	status = "okay";
-+	sram = <&dma_pool>;
 +};
 +
 +&dma2{
 +	status = "okay";
-+	sram = <&dma_pool>;
++};
++
++&dmamux1{
++	status = "okay";
++	dma-masters = <&dma1>;
++	dma-channels = <8>;
 +};
 +
 +&dts{
@@ -968,11 +957,13 @@ index 000000000000..d5f2793f548d
 +	status = "okay";
 +	adc1: adc@0 {
 +		st,min-sample-time-nsecs = <5000>;
-+		st,adc-channels = <0 1>;
++		st,adc-channels = <0>;
 +		status = "okay";
 +	};
 +
 +	adc2: adc@100 {
++		st,min-sample-time-nsecs = <5000>;
++		st,adc-channels = <1>;
 +		status = "okay";
 +	};
 +
@@ -1089,9 +1080,9 @@ index 000000000000..d5f2793f548d
 +	/delete-property/dmas;
 +	/delete-property/dma-names;
 +	pwm1: pwm {
-+		pinctrl-names = "default", "sleep";
-+		pinctrl-0 = <&pwm1_pins_mx>;
-+		pinctrl-1 = <&pwm1_sleep_pins_mx>;
++		status = "okay";
++	};
++	timer@0 {
 +		status = "okay";
 +	};
 +};
