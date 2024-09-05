@@ -142,7 +142,7 @@ new file mode 100644
 index 0000000000..b7284f3028
 --- /dev/null
 +++ b/arch/arm/dts/stm32mp157c-osd32mp1-brk-u-boot.dtsi
-@@ -0,0 +1,219 @@
+@@ -0,0 +1,215 @@
 +/* SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause*/
 +/*
 + * Copyright (C) 2020, Octavo Systems LLC - All Rights Reserved
@@ -244,7 +244,7 @@ index 0000000000..b7284f3028
 +		CLK_I2C46_HSI
 +		CLK_SDMMC3_PLL4P
 +		CLK_USBO_USBPHY
-+		CLK_ADC_CKPER
++		CLK_ADC_PLL4R
 +		CLK_CEC_LSE
 +		CLK_I2C12_HSI
 +		CLK_I2C35_HSI
@@ -345,10 +345,6 @@ index 0000000000..b7284f3028
 +	u-boot,dm-pre-reloc;
 +};
 +
-+&adc{
-+	status = "okay";
-+};
-+
 +#ifndef CONFIG_STM32MP1_TRUSTED
 +&i2s2{
 +	clocks = <&rcc SPI2>, <&rcc SPI2_K>, <&rcc PLL3_Q>, <&rcc PLL3_R>;
@@ -367,7 +363,7 @@ new file mode 100644
 index 0000000000..66c07060de
 --- /dev/null
 +++ b/arch/arm/dts/stm32mp157c-osd32mp1-brk.dts
-@@ -0,0 +1,1147 @@
+@@ -0,0 +1,1129 @@
 +/* SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause) */
 +/*
 + * Copyright (C) Octavo Systems LLC 2022 - All Rights Reserved
@@ -748,21 +744,6 @@ index 0000000000..66c07060de
 +		pins {
 +			pinmux = <STM32_PINMUX('H', 13, ANALOG)>, /* CAN1_TX */
 +				 <STM32_PINMUX('H', 14, ANALOG)>; /* CAN1_RX */
-+		};
-+	};
-+
-+	pwm1_pins_mx: pwm1-0 {
-+		pins {
-+			pinmux = <STM32_PINMUX('A', 9, AF1)>; /* TIM1_CH2 */
-+			bias-pull-down;
-+			drive-push-pull;
-+			slew-rate = <0>;
-+		};
-+	};
-+
-+	pwm1_sleep_pins_mx: pwm1-sleep-0 {
-+		pins {
-+			pinmux = <STM32_PINMUX('A', 9, ANALOG)>; /* TIM1_CH1 */
 +		};
 +	};
 +
@@ -1336,11 +1317,13 @@ index 0000000000..66c07060de
 +	status = "okay";
 +	adc1: adc@0 {
 +		st,min-sample-time-nsecs = <5000>;
-+		st,adc-channels = <0 1>;
++		st,adc-channels = <0>;
 +		status = "okay";
 +	};
 +
 +	adc2: adc@100 {
++		st,min-sample-time-nsecs = <5000>;
++		st,adc-channels = <1>;
 +		status = "okay";
 +	};
 +
@@ -1453,13 +1436,8 @@ index 0000000000..66c07060de
 +
 +&timers1 {
 +	status = "okay";
-+	/* spare dmas for other usage */
-+	/delete-property/dmas;
-+	/delete-property/dma-names;
-+	pwm1: pwm {
-+		pinctrl-names = "default", "sleep";
-+		pinctrl-0 = <&pwm1_pins_mx>;
-+		pinctrl-1 = <&pwm1_sleep_pins_mx>;
++
++	trigger@0 {
 +		status = "okay";
 +	};
 +};

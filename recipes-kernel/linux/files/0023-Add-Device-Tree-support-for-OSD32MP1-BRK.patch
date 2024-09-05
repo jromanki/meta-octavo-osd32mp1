@@ -26,7 +26,7 @@ new file mode 100644
 index 000000000000..d5f2793f548d
 --- /dev/null
 +++ b/arch/arm/boot/dts/stm32mp157c-osd32mp1-brk.dts
-@@ -0,0 +1,1111 @@
+@@ -0,0 +1,1107 @@
 +/* SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause) */
 +/*
 + * Copyright (C) Octavo Systems LLC 2020 - All Rights Reserved
@@ -633,16 +633,12 @@ index 000000000000..d5f2793f548d
 +
 +&dma1{
 +	status = "okay";
++	sram = <&dma_pool>;
 +};
 +
 +&dma2{
 +	status = "okay";
-+};
-+
-+&dmamux1{
-+	status = "okay";
-+	dma-masters = <&dma1>;
-+	dma-channels = <8>;
++	sram = <&dma_pool>;
 +};
 +
 +&dts{
