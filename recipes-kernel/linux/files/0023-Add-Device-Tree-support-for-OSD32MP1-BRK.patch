@@ -953,13 +953,13 @@ index 000000000000..d5f2793f548d
 +	status = "okay";
 +	adc1: adc@0 {
 +		st,min-sample-time-nsecs = <5000>;
-+		st,adc-channels = <0>;
++		st,adc-channels = <0 1>;
 +		status = "okay";
 +	};
 +
 +	adc2: adc@100 {
 +		st,min-sample-time-nsecs = <5000>;
-+		st,adc-channels = <1>;
++		/* st,adc-channels = <1>; */
 +		status = "okay";
 +	};
 +

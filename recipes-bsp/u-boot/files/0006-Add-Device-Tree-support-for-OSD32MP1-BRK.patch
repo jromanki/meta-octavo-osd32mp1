@@ -1317,13 +1317,13 @@ index 0000000000..66c07060de
 +	status = "okay";
 +	adc1: adc@0 {
 +		st,min-sample-time-nsecs = <5000>;
-+		st,adc-channels = <0>;
++		st,adc-channels = <0 1>;
 +		status = "okay";
 +	};
 +
 +	adc2: adc@100 {
 +		st,min-sample-time-nsecs = <5000>;
-+		st,adc-channels = <1>;
++		/* st,adc-channels = <1>; */
 +		status = "okay";
 +	};
 +
