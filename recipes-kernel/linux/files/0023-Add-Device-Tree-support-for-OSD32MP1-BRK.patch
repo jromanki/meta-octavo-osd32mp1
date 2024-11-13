@@ -26,7 +26,7 @@ new file mode 100644
 index 000000000000..d5f2793f548d
 --- /dev/null
 +++ b/arch/arm/boot/dts/stm32mp157c-osd32mp1-brk.dts
-@@ -0,0 +1,1123 @@
+@@ -0,0 +1,1128 @@
 +/* SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause) */
 +/*
 + * Copyright (C) Octavo Systems LLC 2020 - All Rights Reserved
@@ -170,11 +170,6 @@ index 000000000000..d5f2793f548d
 +&pinctrl {
 +	u-boot,dm-pre-reloc;
 +
-+	adc1_in6_pins_a: adc1-in6 {
-+		pins {
-+			pinmux = <STM32_PINMUX('A', 6, ANALOG)>; /* configure 'PA6' as ANALOG */
-+		};
-+	};
 +	i2c1_pins_mx: i2c1-0 {
 +		pins {
 +			pinmux = <STM32_PINMUX('H', 11, AF5)>, /* I2C1_SCL */
@@ -953,30 +948,40 @@ index 000000000000..d5f2793f548d
 +};
 +
 +&adc {
++	pinctrl-names = "default";
 +	vdd-supply = <&vdd>;
 +	vdda-supply = <&vdda>;
 +	vref-supply = <&vdda>;
 +	status = "okay";
 +	adc1: adc@0 {
++		#address-cells = <1>;
++       #size-cells = <0>;
 +		status = "okay";
 +		channel@1 {
-+			label = "1";
-+			reg = <6>;               /* ADC1 in6 channel is used */
-+			st,min-sample-time-ns = <1000>;  /* 1µs sampling time */
++			reg = <3>;               /* ADC1 in3 channel is used (PA6 is ch3)*/
++			st,min-sample-time-ns = <5000>;  /* 5µs sampling time */
 +		};
 +		/* Configure channel 1 as differential (ANA1 - ANA0) */
 +		channel@2 { 
-+			label = "2";
 +			reg = <1>;               /* ADC1 inp1 and inn1 (inn1 equivalent to inp0) channels are used */
 +			diff-channels = <1 0>;
-+			st,min-sample-time-ns = <1000>;  /* 1µs sampling time */
++			st,min-sample-time-ns = <5000>;  /* 5µs sampling time */
 +		};
 +	};
 +
 +	adc2: adc@100 {
-+		st,min-sample-time-nsecs = <5000>;
-+		/* st,adc-channels = <1>; */
++		#address-cells = <1>;
++       #size-cells = <0>;
 +		status = "okay";
++		channel@1 {
++			reg = <4>;               /* ADC1 in3 channel is used (PA6 is ch3)*/
++			st,min-sample-time-ns = <5000>;  /* 5µs sampling time */
++		};
++		/* Configure channel 1 as differential (ANA1 - ANA0) */
++		channel@2 { 
++			reg = <2>;               /* ADC1 inp1 and inn1 (inn1 equivalent to inp0) channels are used */
++			st,min-sample-time-ns = <5000>;  /* 5µs sampling time */
++		};
 +	};
 +
 +	adc_temp: temp {
