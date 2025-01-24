@@ -1145,8 +1145,8 @@ index 0000000000..66c07060de
 +
 +			vdda:ldo5{
 +				regulator-name = "vdda";
-+				regulator-min-microvolt = <2900000>;
-+				regulator-max-microvolt = <2900000>;
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
 +				interrupts = <IT_CURLIM_LDO5 0>;
 +				regulator-boot-on;
 +			};

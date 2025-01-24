@@ -419,8 +419,8 @@ index 000000000..c11172d50
 +
 +			vdda: ldo5 {
 +				regulator-name = "vdda";
-+				regulator-min-microvolt = <2900000>;
-+				regulator-max-microvolt = <2900000>;
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
 +				regulator-boot-on;
 +				standby-ddr-sr{
 +					regulator-off-in-suspend;
